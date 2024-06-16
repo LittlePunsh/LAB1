@@ -1,0 +1,50 @@
+2024-06-13 00:55:34.080349+05:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "GUEST" not found (this database is empty); SQL statement:
+SELECT g.first_name AS guest_first_name, g.last_name AS guest_last_name, r.room_type AS room_type, b.start_date AS start_date, b.end_date AS end_date, p.name AS procedure_name, ps.session_date AS session_date, ps.duration AS duration, ps.result_notes AS result_notes FROM Guest g JOIN Booking b ON g.id = b.guest_id JOIN Room r ON b.room_id = r.id JOIN ProcedureSession ps ON b.id = ps.booking_id JOIN Procedure p ON ps.procedure_id = p.id [42104-224]
+2024-06-13 00:56:08.163335+05:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Синтаксическая ошибка в выражении SQL "INSERT INTO Procedure (name, description)\000d\000aVALUES\000d\000a('Massage Therapy', 'Full body massage to relieve stress and tension.'),\000d\000a('Physiotherapy', 'Treatment to restore, maintain, and make the most of a patient\\'s mobility.'),\000d\000a('Acupuncture', 'Traditional Chinese medicine involving the insertion of thin needles into the skin.');\000d\000a\000d\000aINSERT INTO ProcedureSession (booking_id, procedure_id, session_date, duration, result_notes)\000d\000aVALUES\000d\000a(1, 1, '2023-06-03', 60, 'Guest felt relaxed and relieved.'),\000d\000a(2, 2, '2023-07-17', 45, 'Improvement in mobility reported.'),\000d\000a(3, 3, '2023-08-12', 30, 'Guest experienced reduced pain.[*]');"
+Syntax error in SQL statement "INSERT INTO Procedure (name, description)\000d\000aVALUES\000d\000a('Massage Therapy', 'Full body massage to relieve stress and tension.'),\000d\000a('Physiotherapy', 'Treatment to restore, maintain, and make the most of a patient\\'s mobility.'),\000d\000a('Acupuncture', 'Traditional Chinese medicine involving the insertion of thin needles into the skin.');\000d\000a\000d\000aINSERT INTO ProcedureSession (booking_id, procedure_id, session_date, duration, result_notes)\000d\000aVALUES\000d\000a(1, 1, '2023-06-03', 60, 'Guest felt relaxed and relieved.'),\000d\000a(2, 2, '2023-07-17', 45, 'Improvement in mobility reported.'),\000d\000a(3, 3, '2023-08-12', 30, 'Guest experienced reduced pain.[*]');"; SQL statement:
+INSERT INTO Procedure (name, description)
+VALUES
+('Massage Therapy', 'Full body massage to relieve stress and tension.'),
+('Physiotherapy', 'Treatment to restore, maintain, and make the most of a patient\'s mobility.'),
+('Acupuncture', 'Traditional Chinese medicine involving the insertion of thin needles into the skin.');
+
+INSERT INTO ProcedureSession (booking_id, procedure_id, session_date, duration, result_notes)
+VALUES
+(1, 1, '2023-06-03', 60, 'Guest felt relaxed and relieved.'),
+(2, 2, '2023-07-17', 45, 'Improvement in mobility reported.'),
+(3, 3, '2023-08-12', 30, 'Guest experienced reduced pain.'); [42000-224]
+2024-06-13 00:56:43.960387+05:00 database: flush
+org.h2.message.DbException: Внутренняя ошибка: "org.h2.mvstore.MVStoreException: The file is locked: C:/Users/rrr-r/IdeaProjects/Kursa4DataBase/Sanatorium.mv.db [2.2.224/7]"
+General error: "org.h2.mvstore.MVStoreException: The file is locked: C:/Users/rrr-r/IdeaProjects/Kursa4DataBase/Sanatorium.mv.db [2.2.224/7]" [50000-224]
+	at org.h2.message.DbException.get(DbException.java:212)
+	at org.h2.message.DbException.convert(DbException.java:407)
+	at org.h2.mvstore.db.Store.lambda$new$0(Store.java:122)
+	at org.h2.mvstore.MVStore.handleException(MVStore.java:1546)
+	at org.h2.mvstore.MVStore.panic(MVStore.java:371)
+	at org.h2.mvstore.MVStore.<init>(MVStore.java:291)
+	at org.h2.mvstore.MVStore$Builder.open(MVStore.java:2035)
+	at org.h2.mvstore.db.Store.<init>(Store.java:133)
+	at org.h2.engine.Database.<init>(Database.java:326)
+	at org.h2.engine.Engine.openSession(Engine.java:92)
+	at org.h2.engine.Engine.openSession(Engine.java:222)
+	at org.h2.engine.Engine.createSession(Engine.java:201)
+	at org.h2.engine.SessionRemote.connectEmbeddedOrServer(SessionRemote.java:343)
+	at org.h2.jdbc.JdbcConnection.<init>(JdbcConnection.java:125)
+	at org.h2.Driver.connect(Driver.java:59)
+	at java.sql/java.sql.DriverManager.getConnection(DriverManager.java:682)
+	at java.sql/java.sql.DriverManager.getConnection(DriverManager.java:230)
+	at DataBase.SanatoriumDatabaseH2.main(SanatoriumDatabaseH2.java:15)
+Caused by: org.h2.jdbc.JdbcSQLNonTransientException: Внутренняя ошибка: "org.h2.mvstore.MVStoreException: The file is locked: C:/Users/rrr-r/IdeaProjects/Kursa4DataBase/Sanatorium.mv.db [2.2.224/7]"
+General error: "org.h2.mvstore.MVStoreException: The file is locked: C:/Users/rrr-r/IdeaProjects/Kursa4DataBase/Sanatorium.mv.db [2.2.224/7]" [50000-224]
+	at org.h2.message.DbException.getJdbcSQLException(DbException.java:566)
+	at org.h2.message.DbException.getJdbcSQLException(DbException.java:489)
+	... 18 more
+Caused by: org.h2.mvstore.MVStoreException: The file is locked: C:/Users/rrr-r/IdeaProjects/Kursa4DataBase/Sanatorium.mv.db [2.2.224/7]
+	at org.h2.mvstore.DataUtils.newMVStoreException(DataUtils.java:996)
+	at org.h2.mvstore.SingleFileStore.lockFileChannel(SingleFileStore.java:143)
+	at org.h2.mvstore.SingleFileStore.open(SingleFileStore.java:117)
+	at org.h2.mvstore.SingleFileStore.open(SingleFileStore.java:81)
+	at org.h2.mvstore.MVStore.<init>(MVStore.java:286)
+	... 12 more
